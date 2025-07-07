@@ -1,0 +1,24 @@
+{
+  "project": "ethos-farcaster",
+  "entrypoint": "main.ts",
+  "env": {
+    "DENO_ENV": "production"
+  },
+  "includeFiles": [
+    "routes/**/*.tsx",
+    "routes/**/*.ts",
+    "static/**/*",
+    "types/**/*.ts",
+    "components/**/*.tsx",
+    "fresh.gen.ts",
+    "fresh.config.ts",
+    "twind.config.ts",
+    "deno.json"
+  ],
+  "exclude": [
+    "dev.ts",
+    "README.md",
+    ".git/**/*",
+    "node_modules/**/*"
+  ]
+} 
