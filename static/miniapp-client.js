@@ -91,36 +91,16 @@ function updateCredibilityUI(data) {
         
         <div class="text-center py-8">
           <div class="text-6xl mb-4">🔗</div>
-          <h3 class="text-lg font-semibold text-gray-700 mb-2">No Ethos Score Yet</h3>
-          <p class="text-gray-600 mb-4">
-            Your Farcaster account isn't connected to Ethos yet. Connect it to start building your credibility score!
-          </p>
-          <p class="text-sm text-gray-500 mb-6">
-            Ethos scores are based on peer-to-peer attestations and community feedback.
+          <h3 class="text-lg font-semibold text-gray-700 mb-2">No Ethos profile found!</h3>
+          <p class="text-gray-600 mb-8">
+            If you have an Ethos profile, you can connect it to Farcaster below. Otherwise you'll need to secure an invite from an existing user to get started!
           </p>
           
-          <a 
-            href="https://app.ethos.network/profile/settings" 
-            target="_blank"
-            class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors mb-4"
-          >
-            🛡️ Connect Farcaster to Ethos
-          </a>
-          
-          <p class="text-xs text-gray-500">
-            This will open Ethos Network in a new tab where you can link your accounts.
-          </p>
+          <div class="flex gap-3 justify-center mb-4" style="display: flex; gap: 12px; justify-content: center; margin-bottom: 16px;">
+            <a href="https://app.ethos.network/profile/settings" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors inline-block text-decoration-none" style="background-color: #3b82f6; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block; font-weight: 600;">Connect Farcaster</a>
+            <a href="https://app.ethos.network" target="_blank" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors inline-block text-decoration-none" style="background-color: #6b7280; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block; font-weight: 600;">Open Ethos</a>
+          </div>
         </div>
-      </div>
-      
-      <div class="bg-gray-50 rounded-lg p-4 mb-4">
-        <h3 class="font-semibold mb-2">How to get an Ethos score:</h3>
-        <ol class="text-sm text-gray-600 space-y-1">
-          <li>1. Connect your Farcaster account to Ethos</li>
-          <li>2. Engage authentically in the community</li>
-          <li>3. Receive attestations from other users</li>
-          <li>4. Build your reputation over time</li>
-        </ol>
       </div>
       
       <div class="bg-white rounded-lg shadow-md p-6">
