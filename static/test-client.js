@@ -69,15 +69,15 @@ function updateTestCredibilityUI(data) {
   const contentDiv = document.getElementById('test-content');
   const styling = getLevelStyling(data.score);
   
-  // Handle users with score 0 (untrusted/new users)
-  if (data.score === 0 && data.level === 'untrusted') {
+  // Handle users with score 0 or 1200 (default values when no profile exists)
+  if (data.score === 0 || data.score === 1200) {
     contentDiv.innerHTML = `
-      <div class="text-center py-8">
-        <div class="text-6xl mb-4">🛡️</div>
-        <div class="text-xl font-semibold mb-2">New to Ethos Network</div>
-        <div class="text-gray-600 mb-4">FID ${data.fid} has an Ethos score of 0 (untrusted).</div>
-        <div class="text-sm text-gray-500">This user may be new to the network or hasn't built reputation yet.</div>
-      </div>
+              <div class="text-center py-8">
+          <div class="text-6xl mb-4">🛡️</div>
+          <div class="text-xl font-semibold mb-2">No Ethos Profile Found</div>
+          <div class="text-gray-600 mb-4">FID ${data.fid} doesn't have an Ethos profile yet.</div>
+          <div class="text-sm text-gray-500">This user needs to create an Ethos profile to get a real credibility score.</div>
+        </div>
     `;
     return;
   }

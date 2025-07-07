@@ -81,7 +81,8 @@ export const handler: Handlers = {
       // Get real Ethos score
       const ethosData = await getEthosScore(fid);
       
-      if (!ethosData) {
+      // If no data or default values (0 or 1200), treat as no profile
+      if (!ethosData || ethosData.score === 0 || ethosData.score === 1200) {
         // User not found in Ethos - return default/unknown state
         const defaultCredibility: CredibilityScore = {
           fid,

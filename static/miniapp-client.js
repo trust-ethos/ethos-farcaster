@@ -80,8 +80,8 @@ function updateCredibilityUI(data) {
   const contentDiv = document.getElementById('miniapp-content');
   const styling = getLevelStyling(data.score);
   
-  // Handle users not connected to Ethos (score exactly 0)
-  if (data.score === 0 && data.level === 'untrusted') {
+  // Handle users not connected to Ethos (score 0 or 1200 are default values)
+  if (data.score === 0 || data.score === 1200) {
     contentDiv.innerHTML = `
       <div class="bg-white rounded-lg shadow-md p-6">
         <div class="flex items-center justify-between mb-4">
