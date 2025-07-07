@@ -51,24 +51,9 @@ export default function CredibilityMiniApp({ url }: PageProps) {
             </div>
             
             <div class="bg-white rounded-lg shadow-md p-6">
-              <h2 class="text-xl font-semibold mb-4">Credibility Overview</h2>
-              <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="text-center">
-                  <div class="text-2xl font-bold text-green-600">--</div>
-                  <div class="text-sm text-gray-600">Your Score</div>
-                </div>
-                <div class="text-center">
-                  <div class="text-2xl font-bold text-blue-600">--</div>
-                  <div class="text-sm text-gray-600">Attestations</div>
-                </div>
-                <div class="text-center">
-                  <div class="text-2xl font-bold text-purple-600">--</div>
-                  <div class="text-sm text-gray-600">Network</div>
-                </div>
-                <div class="text-center">
-                  <div class="text-2xl font-bold text-orange-600">--</div>
-                  <div class="text-sm text-gray-600">Rank</div>
-                </div>
+              <div class="text-center">
+                <div class="text-6xl mb-4">🛡️</div>
+                <p class="text-gray-600">Your Ethos score will appear here</p>
               </div>
             </div>
           </div>

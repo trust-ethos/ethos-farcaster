@@ -9,16 +9,6 @@ export interface CredibilityScore {
   fid: number;
   score: number;
   level: string;
-  attestations: number;
-  networkScore: number;
-  rank: number;
-  lastUpdated: string;
-  breakdown: {
-    trustworthiness: number;
-    expertise: number;
-    reliability: number;
-    engagement: number;
-  };
   ethosData: EthosScoreResponse;
 }
 
@@ -74,23 +64,7 @@ function getLevelColor(score: number): string {
   return "red";
 }
 
-// Generate mock breakdown based on Ethos score
-function generateBreakdown(ethosScore: number): {
-  trustworthiness: number;
-  expertise: number;
-  reliability: number;
-  engagement: number;
-} {
-  const base = ethosScore;
-  const variance = 200; // More realistic variance for Ethos score range
-  
-  return {
-    trustworthiness: Math.max(0, Math.min(2800, base + (Math.random() * variance - variance/2))),
-    expertise: Math.max(0, Math.min(2800, base + (Math.random() * variance - variance/2))),
-    reliability: Math.max(0, Math.min(2800, base + (Math.random() * variance - variance/2))),
-    engagement: Math.max(0, Math.min(2800, base + (Math.random() * variance - variance/2))),
-  };
-}
+
 
 export const handler: Handlers = {
   async GET(req, ctx) {
@@ -112,18 +86,8 @@ export const handler: Handlers = {
         const defaultCredibility: CredibilityScore = {
           fid,
           score: 0,
-          level: "unknown",
-          attestations: 0,
-          networkScore: 0,
-          rank: 0,
-          lastUpdated: new Date().toISOString(),
-          breakdown: {
-            trustworthiness: 0,
-            expertise: 0,
-            reliability: 0,
-            engagement: 0,
-          },
-          ethosData: { score: 0, level: "unknown" },
+          level: "untrusted",
+          ethosData: { score: 0, level: "untrusted" },
         };
 
         return new Response(
@@ -142,18 +106,11 @@ export const handler: Handlers = {
 
       // Use actual Ethos score and level
       const actualScore = ethosData.score;
-      const levelCategory = getEthosLevel(actualScore);
-      const breakdown = generateBreakdown(actualScore);
       
       const credibilityScore: CredibilityScore = {
         fid,
         score: actualScore,
         level: ethosData.level,
-        attestations: Math.floor(actualScore / 50) + Math.floor(Math.random() * 10), // Estimated based on score
-        networkScore: Math.floor(actualScore * 0.8) + Math.floor(Math.random() * 100),
-        rank: Math.floor(Math.random() * 1000) + 1, // Mock ranking
-        lastUpdated: new Date().toISOString(),
-        breakdown,
         ethosData,
       };
 

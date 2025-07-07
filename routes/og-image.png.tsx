@@ -1,7 +1,18 @@
 import { Handler } from "$fresh/server.ts";
 
-export const handler: Handler = (_req, _ctx) => {
-  const svg = `<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+export const handler: Handler = async (_req, _ctx) => {
+  try {
+    // Try to serve static image first
+    const imageFile = await Deno.readFile("./static/og-image.png");
+    return new Response(imageFile, {
+      headers: {
+        "Content-Type": "image/png",
+        "Cache-Control": "public, max-age=31536000, immutable",
+      },
+    });
+  } catch {
+    // Fallback to SVG if no static image exists
+    const svg = `<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
   <rect width="1200" height="630" fill="#1f2937"/>
   <circle cx="600" cy="315" r="80" fill="#3b82f6" opacity="0.2"/>
   <circle cx="600" cy="315" r="60" fill="#3b82f6" opacity="0.3"/>
@@ -12,10 +23,11 @@ export const handler: Handler = (_req, _ctx) => {
   <text x="600" y="420" text-anchor="middle" fill="#6b7280" font-family="Arial, sans-serif" font-size="18">Powered by Ethos Network</text>
 </svg>`;
 
-  return new Response(svg, {
-    headers: {
-      "Content-Type": "image/svg+xml",
-      "Cache-Control": "public, max-age=31536000, immutable",
-    },
-  });
+    return new Response(svg, {
+      headers: {
+        "Content-Type": "image/svg+xml",
+        "Cache-Control": "public, max-age=31536000, immutable",
+      },
+    });
+  }
 }; 
