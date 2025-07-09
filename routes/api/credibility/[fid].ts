@@ -1,23 +1,51 @@
 import { type Handlers } from "$fresh/server.ts";
 
-export interface EthosScoreResponse {
+export interface EthosUserResponse {
+  id: number;
+  profileId: number;
+  displayName: string;
+  username: string;
+  avatarUrl: string;
+  description: string;
   score: number;
-  level: string;
+  status: string;
+  userkeys: string[];
+  xpTotal: number;
+  xpStreakDays: number;
+  stats: {
+    review: {
+      received: {
+        negative: number;
+        neutral: number;
+        positive: number;
+      };
+    };
+    vouch: {
+      given: {
+        amountWeiTotal: number;
+        count: number;
+      };
+      received: {
+        amountWeiTotal: number;
+        count: number;
+      };
+    };
+  };
 }
 
 export interface CredibilityScore {
   fid: number;
   score: number;
   level: string;
-  ethosData: EthosScoreResponse;
+  hasProfile: boolean;
+  user?: EthosUserResponse;
 }
 
-async function getEthosScore(fid: number): Promise<EthosScoreResponse | null> {
+async function getEthosUser(fid: number): Promise<EthosUserResponse | null> {
   try {
-    const userkey = `service:farcaster:${fid}`;
-    const url = `https://api.ethos.network/api/v2/score/userkey?userkey=${encodeURIComponent(userkey)}`;
+    const url = `https://api.ethos.network/api/v2/user/by/farcaster/${fid}`;
     
-    console.log(`Fetching Ethos score for FID ${fid} with userkey: ${userkey}`);
+    console.log(`Fetching Ethos user for FID ${fid}`);
     
     const response = await fetch(url, {
       method: 'GET',
@@ -35,11 +63,11 @@ async function getEthosScore(fid: number): Promise<EthosScoreResponse | null> {
       throw new Error(`Ethos API error: ${response.status}`);
     }
 
-    const data: EthosScoreResponse = await response.json();
-    console.log(`Ethos score for FID ${fid}:`, data);
+    const data: EthosUserResponse = await response.json();
+    console.log(`Ethos user data for FID ${fid}:`, data);
     return data;
   } catch (error) {
-    console.error(`Failed to fetch Ethos score for FID ${fid}:`, error);
+    console.error(`Failed to fetch Ethos user for FID ${fid}:`, error);
     return null;
   }
 }
@@ -64,8 +92,6 @@ function getLevelColor(score: number): string {
   return "red";
 }
 
-
-
 export const handler: Handlers = {
   async GET(req, ctx) {
     const fid = parseInt(ctx.params.fid);
@@ -78,17 +104,17 @@ export const handler: Handlers = {
     }
 
     try {
-      // Get real Ethos score
-      const ethosData = await getEthosScore(fid);
+      // Get full Ethos user data
+      const userData = await getEthosUser(fid);
       
       // If no data or default values (0 or 1200), treat as no profile
-      if (!ethosData || ethosData.score === 0 || ethosData.score === 1200) {
+      if (!userData || userData.score === 0 || userData.score === 1200) {
         // User not found in Ethos - return default/unknown state
         const defaultCredibility: CredibilityScore = {
           fid,
           score: 0,
           level: "untrusted",
-          ethosData: { score: 0, level: "untrusted" },
+          hasProfile: false,
         };
 
         return new Response(
@@ -105,14 +131,13 @@ export const handler: Handlers = {
         );
       }
 
-      // Use actual Ethos score and level
-      const actualScore = ethosData.score;
-      
+      // Use actual Ethos user data
       const credibilityScore: CredibilityScore = {
         fid,
-        score: actualScore,
-        level: ethosData.level,
-        ethosData,
+        score: userData.score,
+        level: getEthosLevel(userData.score),
+        hasProfile: true,
+        user: userData,
       };
 
       return new Response(

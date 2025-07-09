@@ -16,17 +16,17 @@ export default function TestPage(props: PageProps) {
             
             <div class="space-y-4">
               <button 
-                onClick={() => (window as any).testUser(1112413)}
+                id="test-revered-btn"
                 class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
               >
                 Test FID 1112413 (Revered User)
               </button>
               
               <button 
-                onClick={() => (window as any).testUser(1)}
+                id="test-no-profile-btn"
                 class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded"
               >
-                Test FID 1 (Untrusted User)
+                Test FID 123456789 (No Profile)
               </button>
               
               <div class="flex space-x-2">
@@ -37,7 +37,7 @@ export default function TestPage(props: PageProps) {
                   class="flex-1 px-3 py-2 border border-gray-300 rounded"
                 />
                 <button 
-                  onClick={() => (window as any).testCustomFid()}
+                  id="test-custom-btn"
                   class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"
                 >
                   Test
@@ -52,7 +52,7 @@ export default function TestPage(props: PageProps) {
         </div>
       </div>
       
-      <script src="/static/test-client.js"></script>
+      <script src="/test-client.js"></script>
     </div>
   );
 } 
