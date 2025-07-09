@@ -2,11 +2,13 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
+import * as $_well_known_farcaster_json from "./routes/.well-known/farcaster.json.ts";
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $api_attestation from "./routes/api/attestation.ts";
 import * as $api_cast_credibility from "./routes/api/cast-credibility.ts";
 import * as $api_credibility_fid_ from "./routes/api/credibility/[fid].ts";
+import * as $api_webhook from "./routes/api/webhook.ts";
 import * as $cast_test from "./routes/cast-test.tsx";
 import * as $credibility from "./routes/credibility.tsx";
 import * as $demo_cast from "./routes/demo-cast.tsx";
@@ -20,11 +22,13 @@ import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {
+    "./routes/.well-known/farcaster.json.ts": $_well_known_farcaster_json,
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
     "./routes/api/attestation.ts": $api_attestation,
     "./routes/api/cast-credibility.ts": $api_cast_credibility,
     "./routes/api/credibility/[fid].ts": $api_credibility_fid_,
+    "./routes/api/webhook.ts": $api_webhook,
     "./routes/cast-test.tsx": $cast_test,
     "./routes/credibility.tsx": $credibility,
     "./routes/demo-cast.tsx": $demo_cast,
